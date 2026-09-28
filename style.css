@@ -517,7 +517,7 @@ h1 span {
 .scrap-bg-img { 
     width: 100%;
     position: relative;
-    z-index: 2;
+    z-index: 3;  /* 提升層級以覆蓋中央圖片與佔位符 */
     transition: filter 0.4s ease;
     filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.6)); 
 }
@@ -526,7 +526,7 @@ h1 span {
 .collage-img-placeholder {
     position: absolute;
     z-index: 1;
-    top: 45%; 
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 65%;
@@ -542,6 +542,18 @@ h1 span {
     justify-content: center;
 }
 .collage-item:hover .collage-img-placeholder { background-color: #1a1a15; color: var(--text-light); }
+
+.collage-img {
+    position: absolute;
+    z-index: 2;  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 65%;
+    height: 55%;
+    object-fit: cover;
+    color: transparent; 
+}
 
 .item-text {
     text-align: center;
