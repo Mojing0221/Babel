@@ -6,9 +6,9 @@ const FACTION_CHARACTERS = {
     cult: [
         {
             name: "黑羊",
-            enName: "EN-Name2",
-            quote: "「代表句子」",
-            desc: "第一行介紹內容。\n第二行介紹內容。\n第三行介紹內容。",
+            enName: "Meilita",
+            quote: "「瑪■亞、瑪利■、■■亞」",
+            desc: "「捨棄污穢、升入天土…」\n「送世人往天土去…那是我們夢寐以求的，無病；無苦；無災的樂園」\n「我做到了，誇誇我…誇誇我吧■■…你在哪裡…？」",
             emblemImg: "../Babel/Img/Emblem_Eye.png",
             fullImg: "../Babel/Img/Role/Meilita_Plot.png",
             chibiImg: "../Babel/Img/Role/Meilita_Chibi.png"
@@ -18,23 +18,14 @@ const FACTION_CHARACTERS = {
         {
             name: "莎莉絲特",
             enName: "Celeste",
-            quote: "「代表句子」",
-            desc: "\n第一行介紹內容。\n第二行介紹內容。\n第三行介紹內容。",
+            quote: "「……孚里埃？…不，你是、誰？」",
+            desc: "冷靜而麻木、瘋狂而暴烈，失去一切的女人，將一切愛恨壓抑於爆炸的火光。\n當與故人相似的外來者出現，恍惚、怨嘆及憤怒一瞬化作猛烈的煙花。",
             emblemImg: "../Babel/Img/Emblem_Eye.png",
             fullImg: "../Babel/Img/Role/Celeste_Plot.png",
             chibiImg: "../Babel/Img/Role/Celeste_Battle.png"
         }
     ],
     tech: [
-        {
-            name: "盤長",
-            enName: "PanChang",
-            quote: "「看在你跟死人差不多的臉色上，算你九折吧。」",
-            desc: "神秘的引路人，身兼軍火販子和情報商等多重身份。\n對島上的情況瞭若指掌，遊走於各方之間，看不清真心與真意。",
-            emblemImg: "../Babel/Img/Emblem_Eye.png",
-            fullImg: "../Babel/Img/Role/PanChang_Plot.png",
-            chibiImg: "../Babel/Img/Role/PanChang-Q.png"
-        },
         {
             name: "主角",
             enName: "Protagonist",
@@ -43,8 +34,70 @@ const FACTION_CHARACTERS = {
             emblemImg: "../Babel/Img/Emblem_Eye.png",
             fullImg: "../Babel/Img/Role/Protagonist_Plot.png",
             chibiImg: "../Babel/Img/Role/Protagonist_Q.png"
+        },
+        {
+            name: "盤長",
+            enName: "PanChang",
+            quote: "「看在你跟死人差不多的臉色上，算你九折吧。」",
+            desc: "神秘的引路人，身兼軍火販子和情報商等多重身份。\n對島上的情況瞭若指掌，遊走於各方之間，看不清真心與真意。",
+            emblemImg: "../Babel/Img/Emblem_Eye.png",
+            fullImg: "../Babel/Img/Role/PanChang_Plot.png",
+            chibiImg: "../Babel/Img/Role/PanChang-Q.png"
         }
     ]
+};
+
+/**
+ * 圖片快取快照容器
+ */
+const imageCache = new Map();
+
+/**
+ * 取得所有角色圖片清單
+ */
+const getCharacterImageUrls = () => {
+    const urls = new Set();
+    Object.values(FACTION_CHARACTERS).forEach(list => {
+        list.forEach(char => {
+            if (char.emblemImg) urls.add(char.emblemImg);
+            if (char.fullImg) urls.add(char.fullImg);
+            if (char.chibiImg) urls.add(char.chibiImg);
+        });
+    });
+    return Array.from(urls);
+};
+
+/**
+ * 預加載單張圖片
+ */
+const preloadSingleImage = (url) => {
+    return new Promise((resolve) => {
+        if (!url || url.trim() === '') {
+            resolve({ url, status: 'empty' });
+            return;
+        }
+
+        const img = new Image();
+        img.src = url;
+
+        img.onload = () => {
+            imageCache.set(url, { status: 'success', img });
+            resolve({ url, status: 'success' });
+        };
+
+        img.onerror = () => {
+            imageCache.set(url, { status: 'error', img: null });
+            resolve({ url, status: 'error' });
+        };
+    });
+};
+
+/**
+ * 批次預加載所有角色資源
+ */
+const preloadAllCharacterAssets = () => {
+    const urls = getCharacterImageUrls();
+    return Promise.all(urls.map(url => preloadSingleImage(url)));
 };
 
 /**
@@ -52,15 +105,25 @@ const FACTION_CHARACTERS = {
  */
 const setSafeImage = (imgEl, src, altText) => {
     if (!imgEl) return;
-    if (src && src.trim() !== '') {
-        imgEl.src = src;
-        imgEl.alt = altText || '';
-        imgEl.classList.remove('img-hidden');
-    } else {
+
+    if (!src || src.trim() === '') {
         imgEl.removeAttribute('src');
         imgEl.alt = '';
         imgEl.classList.add('img-hidden');
+        return;
     }
+
+    const cached = imageCache.get(src);
+    if (cached && cached.status === 'error') {
+        imgEl.removeAttribute('src');
+        imgEl.alt = '';
+        imgEl.classList.add('img-hidden');
+        return;
+    }
+
+    imgEl.src = src;
+    imgEl.alt = altText || '';
+    imgEl.classList.remove('img-hidden');
 };
 
 /**
@@ -77,17 +140,27 @@ const setupImageErrorHandling = () => {
 };
 
 /**
- * 模組 0：資源載入遮罩
+ * 模組 0：資源載入遮罩（整合靜態與動態預加載）
  */
 const initLoader = () => {
-    const removeLoader = () => {
+    const windowLoadPromise = new Promise(resolve => {
+        if (document.readyState === 'complete') {
+            resolve();
+        } else {
+            window.addEventListener('load', resolve, { once: true });
+        }
+    });
+
+    const timeoutPromise = new Promise(resolve => setTimeout(resolve, 5000));
+
+    Promise.race([
+        Promise.all([windowLoadPromise, preloadAllCharacterAssets()]),
+        timeoutPromise
+    ]).then(() => {
         if (document.body.classList.contains('loaded')) return;
         document.body.classList.add('loaded');
         initRevealAnimations();
-    };
-    
-    window.addEventListener('load', removeLoader);
-    setTimeout(removeLoader, 3000); 
+    });
 };
 
 /**
@@ -96,7 +169,7 @@ const initLoader = () => {
 const initNavbarScroll = () => {
     const navbar = document.getElementById('navbar');
     let lastScrollTop = 0;
-    const hideThreshold = 100; 
+    const hideThreshold = 100;
 
     window.addEventListener('scroll', () => {
         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -105,8 +178,8 @@ const initNavbarScroll = () => {
         } else {
             navbar.style.top = '20px';
         }
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
-    }, { passive: true }); 
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, { passive: true });
 };
 
 /**
@@ -184,13 +257,13 @@ const initHeroParallax = () => {
         const rect = hero.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        
+
         const percentX = (x - centerX) / centerX;
         const percentY = (y - centerY) / centerY;
-        
+
         hero.style.setProperty('--mouseX', `${percentX * -15}px`);
         hero.style.setProperty('--mouseY', `${percentY * -15}px`);
     });
@@ -230,7 +303,7 @@ const initCharacterModal = () => {
         enNameEl.textContent = char.enName;
         quoteEl.textContent = char.quote;
         descEl.textContent = char.desc;
-        
+
         setSafeImage(emblemImgEl, char.emblemImg, `${char.name} 陣營圖騰`);
         setSafeImage(chibiImgEl, char.chibiImg, `${char.name} 小立繪`);
         setSafeImage(fullImgEl, char.fullImg, `${char.name} 主立繪`);
