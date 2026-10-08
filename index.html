@@ -63,10 +63,6 @@
 
     <!-- 主視覺區塊 -->
     <section id="hero">
-        <div class="hero-content reveal active" style="--delay: 0s;">
-            <h1>巴別<br><span>BABEL</span></h1>
-        </div>
-
         <!-- 底部滾動引導 -->
         <a href="#about" class="scroll-prompt reveal active" style="--delay: 0.5s;">
             <p>STEP ONTO THE ISLAND</p>
@@ -114,11 +110,10 @@
     <!-- 特色展示/剪紙拼貼區塊 -->
     <section id="features">
         <div class="collage-container">
-            <div class="collage-item reveal item-1" style="--delay: 0.1s;">
+            <div class="collage-item reveal item-1" data-faction="cult" style="--delay: 0.1s;">
                 <div class="frame-box">
                     <img src="../Babel/Img/Decorative frame-2.png" alt="" class="scrap-bg-img">
-                    <!-- 替換此處圖片路徑 -->
-                    <img src="../Babel/Img/Pic-1.png" alt="古神教圖片" class="collage-img">
+                    <img src="../Babel/Img/Role-2.png" alt="古神教圖片" class="collage-img">
                 </div>
                 <div class="item-text">
                     <h3>古神教</h3>
@@ -126,11 +121,21 @@
                 </div>
             </div>
 
-            <div class="collage-item reveal item-2" style="--delay: 0.3s;">
+            <div class="collage-item reveal item-3" data-faction="tech" style="--delay: 0.5s;">
+                <div class="frame-box">
+                    <img src="../Babel/Img/Decorative frame-3.png" alt="" class="scrap-bg-img">
+                    <img src="../Babel/Img/Role-1.png" alt="其他" class="collage-img">
+                </div>
+                <div class="item-text">
+                    <h3>其他</h3>
+                    <p>各有立場的人們。</p>
+                </div>
+            </div>
+
+            <div class="collage-item reveal item-2" data-faction="rose" style="--delay: 0.3s;">
                 <div class="frame-box">
                     <img src="../Babel/Img/Decorative frame-1.png" alt="" class="scrap-bg-img">
-                    <!-- 替換此處圖片路徑 -->
-                    <img src="../Babel/Img/Pic-2.png" alt="薔薇會圖片" class="collage-img">
+                    <img src="../Babel/Img/Role-3.png" alt="薔薇會圖片" class="collage-img">
                 </div>
                 <div class="item-text">
                     <h3>薔薇會</h3>
@@ -138,17 +143,6 @@
                 </div>
             </div>
 
-            <div class="collage-item reveal item-3" style="--delay: 0.5s;">
-                <div class="frame-box">
-                    <img src="../Babel/Img/Decorative frame-3.png" alt="" class="scrap-bg-img">
-                    <!-- 替換此處圖片路徑 -->
-                    <img src="../Babel/Img/Pic-3.png" alt="技嘉科技圖片" class="collage-img">
-                </div>
-                <div class="item-text">
-                    <h3>技嘉科技</h3>
-                    <p>信仰實驗派之舊神，試圖以技術重現舊日實驗場榮光，已隱入暗處許久。</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -168,12 +162,62 @@
         <div class="video-container reveal" style="--delay: 0.1s;">
             <h2>宣傳PV</h2>
             <div class="video-wrapper">
-                <iframe src="https://" title="巴別BABEL 宣傳影片" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZR93anEJijA?si=BxNsf47AgNXBq7Pm"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </div>
     </section>
+
+
+
+    <!-- 角色介紹彈窗 Modal -->
+    <div id="character-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-frame">
+            <img src="../Babel/Img/Decorative frame-4.png" alt="" class="gothic-frame-bg-img">
+
+            <button class="modal-close-btn" id="modal-close" aria-label="關閉介面">&times;</button>
+
+            <button class="modal-nav-btn prev-btn" id="modal-prev" aria-label="上一位角色">
+                <span class="nav-arrow-left"></span>
+            </button>
+            <button class="modal-nav-btn next-btn" id="modal-next" aria-label="下一位角色">
+                <span class="nav-arrow-right"></span>
+            </button>
+
+            <div class="char-modal-body">
+                <div class="char-info-col">
+                    <div class="char-header">
+                        <div class="char-title-block">
+                            <h2 class="char-name" id="char-name">名字</h2>
+                            <p class="char-en-name" id="char-en-name">EN Name</p>
+                            <div class="char-title-divider"></div>
+                        </div>
+                        <div class="char-emblem-box">
+                            <img id="char-emblem-img" alt="陣營圖騰" class="char-emblem-img">
+                        </div>
+                    </div>
+
+                    <div class="char-quote-box">
+                        <p class="char-quote" id="char-quote">「代表句子」</p>
+                    </div>
+
+                    <div class="char-desc-box">
+                        <p class="char-desc" id="char-desc">描述內容</p>
+                    </div>
+
+                    <div class="char-chibi-box">
+                        <img id="char-chibi-img" alt="角色小立繪" class="char-chibi-img">
+                    </div>
+                </div>
+
+                <div class="char-visual-col">
+                    <img id="char-full-img" alt="角色主立繪" class="char-full-img">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- 頁尾 -->
     <footer id="footer">
