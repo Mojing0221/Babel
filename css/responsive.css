@@ -1,0 +1,320 @@
+@media (max-width: 900px) {
+    .newspaper-bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+    }
+    .newspaper-content {
+        position: relative;
+        inset: auto;
+        overflow: visible;
+        padding: 16% 11% 14%;
+        min-height: 320px;
+    }
+    .columns-text {
+        column-count: 1;
+        height: auto;
+    }
+
+    .modal-frame {
+        height: 92vh;
+        max-height: 92vh;
+    }
+    .char-modal-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 1fr) 320px;
+    }
+    .char-info-col {
+        padding: 45px 25px 20px 45px;
+        min-height: 0;
+        overflow-y: auto;
+    }
+    .char-desc-box { 
+        max-width: none; 
+    }
+    .char-visual-col {
+        height: 320px;
+        min-height: 0;
+        overflow: visible;
+    }
+    .char-full-img { 
+        height: 100%; 
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 90px 48px 70px 28px;
+        min-height: 100vh;
+    }
+    #hero { 
+        padding: 0; 
+    }
+
+    #hero {
+        background-image: url('../Img/Title_Bg_Mobile.png');
+        background-color: var(--bg-dark);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    #hero::after {
+        background:
+            linear-gradient(to top, var(--bg-dark) 0%, rgba(13, 13, 13, 0.7) 18%, transparent 45%),
+            linear-gradient(to bottom, var(--bg-dark) 0%, rgba(13, 13, 13, 0.6) 12%, transparent 35%),
+            linear-gradient(to right, var(--bg-dark) 0%, rgba(13, 13, 13, 0.5) 8%, transparent 25%),
+            linear-gradient(to left, var(--bg-dark) 0%, rgba(13, 13, 13, 0.5) 8%, transparent 25%);
+    }
+    .scroll-prompt { 
+        bottom: 12%; 
+    }
+
+    nav#navbar { 
+        height: 48px; 
+        padding-top: 10px; 
+    }
+    nav#navbar ul { 
+        gap: 24px; 
+    }
+    nav#navbar a { 
+        font-size: 0.85rem; 
+        letter-spacing: 2px; 
+    }
+
+    .social-links {
+        top: auto;
+        bottom: 16px;
+        left: 14px;
+        flex-direction: row;
+        gap: 10px;
+        transform: none;
+    }
+    .social-icon { 
+        width: 34px; 
+        height: 34px; 
+        opacity: 0.9; 
+    }
+    .social-icon svg { 
+        width: 18px; 
+        height: 18px; 
+    }
+
+    .side-nav { 
+        right: 12px; 
+        gap: 20px; 
+    }
+    .side-line { 
+        top: -45px; 
+        bottom: -45px; 
+    }
+    .side-dot { 
+        width: 20px; 
+        height: 20px; 
+    }
+    .eye-icon { 
+        width: 11px; 
+        height: 11px; 
+    }
+
+    .gothic-divider { 
+        width: 90%; 
+    }
+
+    .collage-container {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+        gap: 40px;
+    }
+    .item-1, .item-2, .item-3 { 
+        transform: rotate(0deg); 
+    }
+    .item-2 { 
+        transform: rotate(0deg); 
+    }
+    .item-text h3 { 
+        font-size: 1.2rem; 
+    }
+    .item-text p {
+        font-size: 0.9rem;
+        display: block;
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+        overflow: visible;
+    }
+
+    .video-container h2 { 
+        letter-spacing: 3px; 
+    }
+
+    .modal-overlay { 
+        padding: 10px; 
+    }
+    .modal-frame {
+        height: 94vh;
+        max-height: 94vh;
+    }
+    .modal-close-btn { 
+        top: 12px; 
+        right: 16px; 
+        font-size: 2rem; 
+    }
+
+    .modal-nav-btn {
+        top: 50%;
+        bottom: auto;
+        transform: translateY(-50%);
+        padding: 10px;
+        z-index: 40;
+    }
+    .modal-nav-btn:hover { 
+        transform: translateY(-50%) scale(1.2); 
+    }
+    .modal-nav-btn.prev-btn { left: 10px; }
+    .modal-nav-btn.next-btn { right: 10px; }
+
+    /* 改為單列並排疊加，避免被網格截斷 */
+    .char-modal-body { 
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 立繪置於底層，完整適配顯示 */
+    .char-visual-col { 
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        overflow: visible;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .char-visual-col::after {
+        background: linear-gradient(
+            to top,
+            rgba(11, 11, 13, 0.98) 0%,
+            rgba(11, 11, 13, 0.85) 30%,
+            rgba(11, 11, 13, 0.6) 65%,
+            rgba(11, 11, 13, 0.4) 100%
+        );
+    }
+
+    .char-full-img {
+        width: auto;
+        max-width: 90%;
+        height: 85%;
+        max-height: 85%;
+        object-fit: contain;
+        object-position: bottom center;
+        transform: none;
+    }
+
+    /* 文字層浮動於上方，允許完整捲動瀏覽 */
+    .char-info-col { 
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        padding: 45px 36px 30px 42px;
+        overflow-y: auto;
+    }
+
+    .char-header { 
+        margin-bottom: 16px; 
+    }
+    .char-name { 
+        font-size: 1.8rem; 
+        letter-spacing: 3px; 
+    }
+    .char-en-name { 
+        font-size: 0.95rem; 
+    }
+    .char-emblem-box { 
+        width: 48px; 
+        height: 48px; 
+        margin-right: 15px; 
+    }
+    .char-quote { 
+        font-size: 1rem; 
+    }
+    .char-quote-box {
+        margin-bottom: 15px;
+    }
+    .char-desc { 
+        font-size: 0.9rem; 
+        line-height: 1.8; 
+        letter-spacing: 0.5px; 
+        text-align: left; 
+    }
+    .char-desc-box { 
+        margin-bottom: 16px; 
+    }
+    .char-chibi-box { 
+        width: 75px; 
+        min-height: 0; 
+        margin-top: 10px; 
+    }
+
+    footer { 
+        padding: 30px 20px 70px; 
+    }
+}
+
+@media (max-width: 480px) {
+    section { 
+        padding: 80px 44px 60px 22px; 
+    }
+    nav#navbar a { 
+        font-size: 0.78rem; 
+        letter-spacing: 1px; 
+    }
+    nav#navbar ul { 
+        gap: 18px; 
+    }
+    .newspaper-content { 
+        padding: 18% 12% 16%; 
+    }
+    .newspaper-content h2 { 
+        letter-spacing: 3px; 
+    }
+
+    .char-info-col {
+        padding: 40px 26px 25px 32px;
+    }
+
+    .char-full-img {
+        max-width: 95%;
+        height: 80%;
+        max-height: 80%;
+    }
+
+    footer { 
+        font-size: 0.7rem; 
+    }
+}
+
+@supports (height: 100dvh) {
+    @media (max-width: 900px) {
+        .modal-frame { 
+            height: 92dvh; 
+            max-height: 92dvh; 
+        }
+    }
+    @media (max-width: 768px) {
+        section { 
+            min-height: 100dvh; 
+        }
+        .modal-frame { 
+            height: 94dvh; 
+            max-height: 94dvh; 
+        }
+    }
+}

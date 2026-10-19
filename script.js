@@ -174,9 +174,9 @@ const initNavbarScroll = () => {
     window.addEventListener('scroll', () => {
         let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
         if (currentScroll > lastScrollTop && currentScroll > hideThreshold) {
-            navbar.style.top = '-100px';
+            navbar.classList.add('nav-hidden');
         } else {
-            navbar.style.top = '20px';
+            navbar.classList.remove('nav-hidden');
         }
         lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
     }, { passive: true });

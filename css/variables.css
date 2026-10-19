@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --bg-dark: #0d0d0d;
+    --ink-color: #362822;
+    --blood-mute: #710912;
+    --blood-dark: #45080c;
+    --blood-alert: #a61b1b;
+    --paper-stealth: #73675c;
+    --brand-gold: #c28d39;
+    --gold-rgb: 194, 141, 57;   
+    --text-light: #efe5d2;
+    --text-sub: #b8aba0;
+
+    --font-serif: 'Playfair Display', 'LXGW WenKai TC', 'Noto Serif TC', serif;
+    --font-typewriter: 'Courier Prime', 'LXGW WenKai TC', monospace;
+
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --paper-glow: 0 0 15px #fff, 0 0 30px rgba(255, 255, 255, 0.8);   
+    --text-shadow-dark: 0 2px 10px rgba(0, 0, 0, 0.9);                
+    --star-clip: polygon(50% 0%, 55% 45%, 100% 50%, 55% 55%, 50% 100%, 45% 55%, 0% 50%, 45% 45%);
+}
